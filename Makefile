@@ -9,6 +9,11 @@ VERSION := $(word 2, $(subst -, ,$(TAG)))  # This gets the prefix part (thanos)
 
 push-chart:
 	@echo "=== Helm login ==="
+	@echo "=== ${TAG} ==="
+	@echo "=== ${CH_DIR} ==="
+	@echo "=== ${PACKAGED_CHART} ==="
+	@echo "=== ${CHART} ==="
+	@echo "=== ${VERSION} ==="
 	aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | helm3.6.3 registry login ${ECR_HOST} --username AWS --password-stdin --debug
 	@echo "=== save chart ==="
 	helm3.6.3 chart save ${CH_DIR}/${CHART}/ ${ECR_HOST}/dataos-base-charts:${TAG}
