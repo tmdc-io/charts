@@ -8,11 +8,11 @@ VERSION := $(strip $(word 2, $(subst -, ,$(TAG))))
 
 push-chart:
 	@echo "=== Helm login ==="
-	@echo "=== 1${TAG}1 ==="
-	@echo "=== 1${CH_DIR}1 ==="
-	@echo "=== 1${PACKAGED_CHART}1 ==="
-	@echo "=== 1${CHART}1 ==="
-	@echo "=== 1${VERSION}1 ==="
+	@echo "=== ${TAG} ==="
+	@echo "=== ${CH_DIR} ==="
+	@echo "=== ${PACKAGED_CHART} ==="
+	@echo "=== ${CHART} ==="
+	@echo "=== ${VERSION} ==="
 	aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | helm3.6.3 registry login ${ECR_HOST} --username AWS --password-stdin --debug
 	@echo "=== save chart ==="
 	helm3.6.3 chart save ${CH_DIR}/${CHART}/ ${ECR_HOST}/dataos-base-charts:${TAG}
