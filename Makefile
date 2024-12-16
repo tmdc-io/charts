@@ -8,11 +8,6 @@ VERSION := $(strip $(word 2, $(subst -, ,$(TAG))))
 
 push-chart:
 	@echo "=== Helm login ==="
-	@echo "=== ${TAG} ==="
-	@echo "=== ${CH_DIR} ==="
-	@echo "=== ${PACKAGED_CHART} ==="
-	@echo "=== ${CHART} ==="
-	@echo "=== ${VERSION} ==="
 	aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | helm3.6.3 registry login ${ECR_HOST} --username AWS --password-stdin --debug
 	@echo "=== save chart ==="
 	helm3.6.3 chart save ${CH_DIR}/${CHART}/ ${ECR_HOST}/dataos-base-charts:${TAG}
@@ -27,6 +22,9 @@ push-oci-chart:
 	@echo
 	echo "=== login to OCI registry ==="
 	aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | helm3.14.0 registry login ${ECR_HOST} --username AWS --password-stdin --debug
+	@echo
+	@echo "=== update dependencies ==="
+	helm3.14.0 dependency update ${CH_DIR}/${CHART}/
 	@echo
 	@echo "=== package OCI chart ==="
 	helm3.14.0 package ${CH_DIR}/${CHART}/ --version ${VERSION}
