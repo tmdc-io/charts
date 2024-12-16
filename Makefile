@@ -4,7 +4,7 @@ CH_DIR = bitnami
 # VERSION = ${TAG}
 PACKAGED_CHART = ${TAG}.tgz
 CHART := $(strip $(word 1, $(subst -, ,$(TAG))))
-VERSION := $(strip $(word 2, $(subst -, ,$(TAG))))
+VERSION := $(subst $(word 1,$(subst -, ,$(TAG)))-, ,$(TAG))
 
 push-chart:
 	@echo "=== Helm login ==="
