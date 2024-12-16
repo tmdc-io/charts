@@ -3,9 +3,8 @@
 CH_DIR = bitnami
 # VERSION = ${TAG}
 PACKAGED_CHART = ${TAG}.tgz
-# Split the prefix (e.g., 'thanos') and the version (e.g., '2.3.4')
-CHART := $(word 1, $(subst -, ,$(TAG)))  # This gets the version part (2.3.4)
-VERSION := $(word 2, $(subst -, ,$(TAG)))  # This gets the prefix part (thanos)
+CHART := $(strip $(word 1, $(subst -, ,$(TAG))))
+VERSION := $(strip $(word 2, $(subst -, ,$(TAG))))
 
 push-chart:
 	@echo "=== Helm login ==="
